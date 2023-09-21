@@ -1,3 +1,4 @@
+import { JSDOM } from "jsdom";
 const getParkrunUser = async () => {
   const users = [
     219820, 1400649, 3256891, 5849177, 557046, 7527028, 6907303, 735938,
