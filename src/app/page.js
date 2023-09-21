@@ -1,10 +1,7 @@
 const getParkrunUser = async () => {
-  const res = await fetch(
-    "parkrun-nextjs-8cjszvj6r-ajdvz0423.vercel.app/api/getParkrun",
-    {
-      cache: "no-store",
-    }
-  );
+  const res = await fetch("api/getParkrun", {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
