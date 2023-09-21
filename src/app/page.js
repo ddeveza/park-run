@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom";
+import MainComponent from "./MainComponent";
 const getParkrunUser = async () => {
   const users = [
     219820, 1400649, 3256891, 5849177, 557046, 7527028, 6907303, 735938,
@@ -8,54 +9,46 @@ const getParkrunUser = async () => {
 
   const randomNum = Math.floor(Math.random() * users.length) + 1;
   const randomUser = users[randomNum];
-
-  const response = await fetch(
-    `https://www.parkrun.com.au/parkrunner/${randomUser}/`
-  );
-  const html = await response.text();
-
-  const dom = new JSDOM(html);
-  const document = dom.window.document;
-
-  const name = document.querySelector("h2")?.textContent;
-  const parkruns = document.querySelector("h3")?.textContent;
-
-  //total credits
-  const volunteer = document.getElementById("volunteer-summary");
-  const volunteer_table = volunteer.nextElementSibling;
-  const volunteer_tfoot = volunteer_table.querySelector("tfoot");
-  const first_cell = volunteer_tfoot.querySelector("td");
-
-  let total_credits = first_cell.nextElementSibling.textContent;
-
-  //event summaries
-
-  const summary = document.getElementById("event-summary");
-  const summary_table = summary.nextElementSibling;
-  const summary_tfoot = summary_table.querySelector("tfoot");
-  const fifth_cell = summary_tfoot.querySelector("td:nth-child(5)").textContent;
-
-  let event_summary = fifth_cell;
-
-  const data = [{ name, parkruns, total_credits, event_summary }];
-    return data
+  try {
+    const response = await fetch(
+      `https://www.parkrun.com.au/parkrunner/${randomUser}/`
+    );
+    const html = await response.text();
+  
+    const dom = new JSDOM(html);
+    const document = dom.window.document;
+  
+    const name = document.querySelector("h2")?.textContent;
+    const parkruns = document.querySelector("h3")?.textContent;
+  
+    //total credits
+    const volunteer = document.getElementById("volunteer-summary");
+    const volunteer_table = volunteer.nextElementSibling;
+    const volunteer_tfoot = volunteer_table.querySelector("tfoot");
+    const first_cell = volunteer_tfoot.querySelector("td");
+  
+    let total_credits = first_cell.nextElementSibling.textContent;
+  
+    //event summaries
+  
+    const summary = document.getElementById("event-summary");
+    const summary_table = summary.nextElementSibling;
+    const summary_tfoot = summary_table.querySelector("tfoot");
+    const fifth_cell = summary_tfoot.querySelector("td:nth-child(5)").textContent;
+  
+    let event_summary = fifth_cell;
+  
+    const data = [{ name, parkruns, total_credits, event_summary }];
+      return data
+  }catch (error) {
+    console.log({error})
+  }
+ 
 };
 
 export default async function Home() {
   const parkrun_user = await getParkrunUser();
-
   return (
-    <main className="p-48">
-      {parkrun_user.map((user) => {
-        return (
-          <div key={user.name}>
-            <h1>{user.name}</h1>
-            <h1>{user.parkruns}</h1>
-            <h1>{user.total_credits}</h1>
-            <h1>{user.event_summary}</h1>
-          </div>
-        );
-      })}
-    </main>
+    <MainComponent parkrun_user={parkrun_user}/>
   );
 }
