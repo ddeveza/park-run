@@ -10,10 +10,10 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 const Navbar = () => {
   return (
     <nav className="flex justify-between m-4 sm:m-10">
-      <Link href="/" className="flex items-center">
-        <div className="flex text-2xl sm:text-4xl items-center gap-2 text-[#67611F] sm:gap-5">
+      <Link href="/" className="flex items-end">
+        <div className="flex text-2xl sm:text-4xl items-end gap-2 text-[#67611F] sm:gap-5">
           <h1>Our</h1>
-          <div className="relative w-24 h-12 sm:w-28 sm:h-16">
+          <div className="relative w-24 h-12 sm:w-32 sm:h-16">
             <Image
               src="/parkrun-logo-brown.png"
               fill={true}

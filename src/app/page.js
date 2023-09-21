@@ -13,7 +13,7 @@ export default async function Home() {
   const parkrun_user = await getParkrunUser();
 
   return (
-    <main className="">
+    <main className="p-48">
       {parkrun_user.map((user) => {
         return (
           <div key={user.name}>
